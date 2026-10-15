@@ -1,0 +1,39 @@
+# Python
+*.pyc
+__pycache__/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Rocq / Coq
+*.vo
+*.vok
+*.vos
+*.glob
+.*.aux
+.coq-native/
+.lia.cache
+.nia.cache
+snippets/rocq/html/
+
+# Editor / OS cruft
+*~
+\#*\#
+.DS_Store
+
+# Emacs temp files
+\#*\#
+.#*
+*.*~
+.~*
+
+# Claude Code local overrides
+**/.claude/settings.local.json
+
+# Rocq/Coq
+.coq-native/
+*.aux
+*.glob
+*.vo
+*.vok
+*.vos
