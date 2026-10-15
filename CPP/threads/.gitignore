@@ -1,0 +1,8 @@
+# Compiled example binaries -- makefile's `%: %.cpp` rule builds one
+# extensionless executable per NN_name.cpp source, so ignore anything
+# matching that naming pattern, then un-ignore the .cpp sources themselves.
+/[0-9][0-9]_*
+!*.cpp
+
+# ThreadSanitizer binaries from `make tsan`
+*.tsan

@@ -1,0 +1,58 @@
+#!/bin/bash
+
+PRECISION_NUMBER=4
+NAME_FOLDER="folder"
+NAME_RESULTS_FOLDER="data"
+SEP="_"
+
+if [[ $1 =~ ^(-[Hh]|--[Hh][Ee][Ll][Pp])$ ]]; then
+	echo -e "\n\tUSAGE: "
+	echo -e "\t\t -H | --help  : Help"
+	echo -e "\t\t -F           : Main folder name, default is '$NAME_FOLDER'"
+	echo -e "\t\t -f           : Data folder name, default is '$NAME_RESULTS_FOLDER'"
+  echo -e "\t\t -s           : Separator folders, default is '${SEP}'"
+	echo -e "\t\t -n           : Number lenght, default is '$PRECISION_NUMBER' (e.g. data_0001)"	
+	echo -e "\n"
+	exit 1
+else
+	while [[ $# -gt 0 ]]; do
+		opt="$1"
+		shift;
+		current_arg="$1"
+		if [[ "$current_arg" =~ ^-{1,2}.* ]]; then
+			echo "WARNING: You may have left an argument blank. Double check your command." 
+		fi
+		case "$opt" in
+			"-f" ) NAME_RESULTS_FOLDER="$1"; shift;;
+			"-F" ) NAME_FOLDER="$1"; shift;;
+      "-s" ) SEP="$1"; shift;;
+			"-n" ) PRECISION_NUMBER="$1"; shift;;
+			*    ) echo "ERROR: Invalid option: \""$opt"\"" >&2
+			exit 1;;
+		esac
+	done
+fi
+
+PATH_FOLDER="${NAME_FOLDER}/${NAME_RESULTS_FOLDER}"
+
+if [[ ! -e $NAME_FOLDER ]];
+	then
+	mkdir $NAME_FOLDER
+fi
+
+DIR_NAME=$NAME_FOLDER/$NAME_RESULTS_FOLDER
+
+LIST_DIR=`ls -d ${DIR_NAME}* 2>/dev/null`
+if [[ ! -z $LIST_DIR ]]
+then
+    NUM=`echo "$LIST_DIR" | sed "s#${DIR_NAME}${SEP}##" | sort -n | tail -1`
+    let NUM=10#$NUM+1
+else
+    NUM=0
+fi
+
+LEN=${#NUM}
+let NUM_ZEROES=10#${PRECISION_NUMBER}-$LEN
+ZEROES=`for ((i=0; i<$NUM_ZEROES; i++)); do echo -n "0"; done`
+
+echo ${PATH_FOLDER}${SEP}${ZEROES}${NUM}

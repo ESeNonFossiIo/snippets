@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+
+    <title>JSON Tester</title>
+  </head>
+  <body>
+	<div class="container">
+		<h1>JSON Tester</h1>
+		<div class="form-group">
+			<label for="url">JSON Server URL:</label>
+			<input type="text" class="form-control" id="url" placeholder="Enter url" value="http://127.0.0.1:8008/">
+		</div>
+		<button type="button" class="btn btn-primary" onclick="start();">Esegui richiesta</button>
+		<div class="form-group">
+			<label>Risposta:</label>
+			<pre style="min-height: 250px;" class="border" id="output"></pre>
+		</div>
+	</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+
+<script>
+function start() {
+	var url = $('#url').val();
+	$.getJSON(url, function(data) {
+		$('#output').append(JSON.stringify(data)+"<BR>");
+	})
+	.fail(function() {
+		alert( "error" );
+	})
+}
+</script>
+  </body>
+</html>
